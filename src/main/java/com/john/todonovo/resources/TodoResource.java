@@ -21,8 +21,8 @@ import com.john.todonovo.domain.Todo;
 import com.john.todonovo.services.TodoService;
 
 @CrossOrigin("*")
-@RestController
-@RequestMapping(value = "/todos")
+@RestController("/api/")
+@RequestMapping(value = "todos")
 public class TodoResource {
 
 	@Autowired
