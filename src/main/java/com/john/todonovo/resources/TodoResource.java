@@ -20,6 +20,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.john.todonovo.domain.Todo;
 import com.john.todonovo.services.TodoService;
 
+import io.swagger.annotations.ApiOperation;
+
 @CrossOrigin("*")
 @RestController("/api/")
 @RequestMapping(value = "todos")
@@ -29,6 +31,7 @@ public class TodoResource {
 	private TodoService service;
 
 	@GetMapping("/{id}")
+	@ApiOperation(value="Retorna Todo pelo Id")
 	public ResponseEntity<Todo> findById(@PathVariable("id") Integer id) {
 
 		Todo obj = service.findById(id);
@@ -38,30 +41,33 @@ public class TodoResource {
 	}
 
 	@GetMapping("/open")
+	@ApiOperation(value="Retorna lista de Todo com status aberto")
 	public ResponseEntity<List<Todo>> listOpen() {
 
 		List<Todo> list = service.findAllOpen();
 
 		return ResponseEntity.ok().body(list);
 	}
-
+	
 	@GetMapping("/close")
+	@ApiOperation(value="Retorna lista de Todo com status fechado")
 	public ResponseEntity<List<Todo>> listClose() {
 
 		List<Todo> list = service.findAllClose();
 
 		return ResponseEntity.ok().body(list);
 	}
-
+	
 	@GetMapping("/")
+	@ApiOperation(value="Retorna lista de Todo")
 	public ResponseEntity<List<Todo>> listarAll() {
 
 		List<Todo> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 
-
 	@PostMapping("/")
+	@ApiOperation(value="Cria novo Todo")
 	public ResponseEntity<Todo> novoTodo(@RequestBody Todo todoBody) {
 
 		/*
@@ -76,14 +82,17 @@ public class TodoResource {
 		return ResponseEntity.created(uri).body(todo);
 	}
 
+	
 	@DeleteMapping("/{id}")
+	@ApiOperation(value="Deleta Todo pelo Id")
 	public void deletarTodo(@PathVariable("id") Integer id) {
 
 		service.deletarTodo(id);
 
 	} 
-
+	
 	@DeleteMapping("/delete/{id}")
+	@ApiOperation(value="2º Deleta Todo pelo Id")
 	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
 		
 		Todo obj = service.findById(id);
@@ -99,8 +108,9 @@ public class TodoResource {
 
 		}
 	}
-	
+		
 	@PutMapping("/{id}")
+	@ApiOperation(value="Altera Todo pelo Id")
 	public ResponseEntity<Todo> update(@PathVariable("id") Integer id,@RequestBody Todo todo){
 		
 		Todo newObj = service.update(id, todo);
